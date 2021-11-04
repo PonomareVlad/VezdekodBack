@@ -5,6 +5,12 @@
       "use": "@vercel/node@canary"
     }
   ],
+  "rewrites": [
+    {
+      "source": "(.*)",
+      "destination": "/index.mjs"
+    }
+  ],
   "github": {
     "silent": true
   }
