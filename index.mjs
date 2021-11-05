@@ -50,6 +50,7 @@ const router = Router().get('/', handler).get('/get', async (req, res) => {
     const metadata = await sharp(image).metadata();
     const aspectRatio = calculateAspectRatio.default(metadata.width, metadata.height)
     delete metadata.icc;
+    delete metadata.exif;
     const [similarImages] = await connection.execute('SELECT * FROM `images` WHERE hash=? AND aspect_ratio=? AND width>=? AND height>=?',
         [hash, aspectRatio, metadata.width, metadata.height]);
     const [replaceableImages] = await connection.execute('SELECT * FROM `images` WHERE hash=? AND aspect_ratio=?', [hash, aspectRatio]);
