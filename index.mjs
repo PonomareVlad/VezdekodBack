@@ -20,6 +20,7 @@ const router = Router().get('/get', async (req, res) => {
     if (!req.query.id) return res.end('No parameter')
     const connection = await mysql.createConnection(mysqlCredentials);
     const [rows, fields] = await connection.execute('SELECT * FROM `images` WHERE id=?', [parseInt(req.query.id)]);
+    await connection.end()
     console.debug({rows});
     if (!rows || !rows.length) return res.end('Not found')
     const target = rows.shift();
@@ -38,6 +39,7 @@ const router = Router().get('/get', async (req, res) => {
     const connection = await mysql.createConnection(mysqlCredentials);
     const image = await readFile(files.image.filepath);
     const result = await connection.execute('INSERT INTO `images` SET image=?, mimetype=?', [image, files.image.mimetype]);
+    await connection.end()
     console.debug(result);
     return send(res, 200, {id: result.shift().insertId})
 })
