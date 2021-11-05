@@ -7,6 +7,7 @@ import {readFile} from "fs/promises"
 import handler from 'serve-handler'
 import mysql from 'mysql2/promise'
 import {config} from 'dotenv'
+import sharp from 'sharp'
 
 config();
 const mysqlCredentials = {
@@ -26,6 +27,9 @@ const router = Router().get('/', handler).get('/get', async (req, res) => {
     if (!rows || !rows.length) return res.end('Not found')
     const target = rows.shift();
     res.setHeader('Content-Type', target.mimetype);
+    const scale = req.query.scale ? parseFloat(req.query.scale) : 1.0;
+    if (scale !== 1) return send(res, 200, await sharp(target.image).metadata().then(({width}) =>
+        sharp(target.image).resize(Math.round(width * scale)).toBuffer()));
     return send(res, 200, target.image)
 }).post('/upload', async (req, res) => {
     const form = formidable({});
