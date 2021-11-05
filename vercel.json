@@ -1,6 +1,10 @@
 {
   "builds": [
     {
+      "src": "/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "index.mjs",
       "use": "@vercel/node@canary"
     }
