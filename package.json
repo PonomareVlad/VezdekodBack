@@ -7,9 +7,11 @@
     "dev": "micro-dev"
   },
   "dependencies": {
+    "calculate-aspect-ratio": "^0.1.3",
     "dotenv": "^10.0.0",
     "finalhandler": "^1.1.2",
     "formidable": "^2.0.1",
+    "imghash": "^0.0.9",
     "micro-query": "^0.3.0",
     "micro-with-es": "latest",
     "mysql2": "^2.3.2",
