@@ -13,7 +13,8 @@
     "micro-query": "^0.3.0",
     "micro-with-es": "latest",
     "mysql2": "^2.3.2",
-    "router": "^1.3.5"
+    "router": "^1.3.5",
+    "serve-handler": "^6.1.3"
   },
   "devDependencies": {
     "es-micro-dev": "latest"

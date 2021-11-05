@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vezdekod • Back</title>
+    <meta content="dark light" name="color-scheme">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <style>
+        * {
+            font-family: Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<h1>Back-end</h1>
+<form action="/upload" enctype="multipart/form-data" method="post">
+    <fieldset>
+        <h2>1. Загрузка изображения</h2>
+        <p>
+            <label>Выберите изображение для загрузки:
+                <input accept="image/jpeg" name="image" required type="file"></label>
+        </p>
+        <button>Загрузить</button>
+        <p>После завершения загрузки, отобразится идентификатор изображения (или ошибка, если что-то пойдет не так)</p>
+    </fieldset>
+</form>
+<br>
+<form action="/get" method="get">
+    <fieldset>
+        <h2>2. Получение изображения по ID</h2>
+        <p><input min="1" name="id" placeholder="ID изображения" required step="1" type="number"></p>
+        <button>Получить</button>
+        <p>После завершения запроса, отобразится полученное изображение (или ошибка, если его не существует)</p>
+    </fieldset>
+</form>
+</body>
+</html>

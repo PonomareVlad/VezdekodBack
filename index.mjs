@@ -4,6 +4,7 @@ import {send} from 'micro-with-es'
 import formidable from 'formidable'
 import finalhandler from 'finalhandler'
 import {readFile} from "fs/promises"
+import handler from 'serve-handler'
 import mysql from 'mysql2/promise'
 import {config} from 'dotenv'
 
@@ -15,7 +16,7 @@ const mysqlCredentials = {
     database: process.env.MYSQL_DB
 }
 
-const router = Router().get('/get', async (req, res) => {
+const router = Router().get('/', handler).get('/get', async (req, res) => {
     if (!req.query) req.query = query(req)
     if (!req.query.id) return res.end('No parameter')
     const connection = await mysql.createConnection(mysqlCredentials);
@@ -35,7 +36,7 @@ const router = Router().get('/get', async (req, res) => {
             resolve({fields, files});
         });
     });
-    if (!files || !files.image) return res.send('No image');
+    if (!files || !files.image) return res.end('No image');
     const connection = await mysql.createConnection(mysqlCredentials);
     const image = await readFile(files.image.filepath);
     const result = await connection.execute('INSERT INTO `images` SET image=?, mimetype=?', [image, files.image.mimetype]);
