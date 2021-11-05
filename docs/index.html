@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vezdekod • Back</title>
+    <meta content="dark light" name="color-scheme">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <style>
+        * {
+            font-family: Helvetica, sans-serif;
+        }
+
+        nav {
+            pointer-events: none;
+        }
+
+        nav:not(:hover) > a:after {
+            color: transparent;
+        }
+
+        a {
+            pointer-events: all;
+            color: inherit;
+            font-size: 20px;
+            padding: 0 .25rem;
+        }
+
+        a:not(:hover) {
+            text-decoration: unset;
+        }
+
+        a:after {
+            display: inline-block;
+            content: ' —> ';
+            margin-left: .5rem;
+        }
+
+        a:hover:after, a:hover ~ a:after {
+            color: transparent;
+        }
+
+        a:last-of-type:after {
+            content: ' 🎉 ';
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+<h1>Back-end</h1>
+<nav>
+    <a href="https://vezdekod-backend.vercel.app">10</a>
+    <a href="http://37.139.35.89">20 — 50</a>
+</nav>
+</body>
+</html>
