@@ -1,10 +1,21 @@
 {
   "name": "vezdekodback",
   "description": "Vezdekod Back-end",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "micro",
+    "dev": "micro-dev"
+  },
   "dependencies": {
+    "dotenv": "^10.0.0",
     "finalhandler": "^1.1.2",
     "formidable": "^2.0.1",
+    "micro-query": "^0.3.0",
+    "micro-with-es": "latest",
     "mysql2": "^2.3.2",
     "router": "^1.3.5"
+  },
+  "devDependencies": {
+    "es-micro-dev": "latest"
   }
 }

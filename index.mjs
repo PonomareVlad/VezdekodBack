@@ -1,9 +1,13 @@
 import Router from 'router'
+import query from 'micro-query'
+import {send} from 'micro-with-es'
 import formidable from 'formidable'
 import finalhandler from 'finalhandler'
 import {readFile} from "fs/promises"
 import mysql from 'mysql2/promise'
+import {config} from 'dotenv'
 
+config();
 const mysqlCredentials = {
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
@@ -12,14 +16,15 @@ const mysqlCredentials = {
 }
 
 const router = Router().get('/get', async (req, res) => {
-    if (!req.query.id) return res.send('No parameter')
+    if (!req.query) req.query = query(req)
+    if (!req.query.id) return res.end('No parameter')
     const connection = await mysql.createConnection(mysqlCredentials);
     const [rows, fields] = await connection.execute('SELECT * FROM `images` WHERE id=?', [parseInt(req.query.id)]);
     console.debug({rows});
-    if (!rows || !rows.length) return res.send('Not found')
+    if (!rows || !rows.length) return res.end('Not found')
     const target = rows.shift();
     res.setHeader('Content-Type', target.mimetype);
-    return await res.send(target.image)
+    return send(res, 200, target.image)
 }).post('/upload', async (req, res) => {
     const form = formidable({});
     const {fields, files} = await new Promise((resolve, reject) => {
@@ -29,12 +34,12 @@ const router = Router().get('/get', async (req, res) => {
             resolve({fields, files});
         });
     });
-    if (!files || !files.image) return await res.send('No image');
+    if (!files || !files.image) return res.send('No image');
     const connection = await mysql.createConnection(mysqlCredentials);
     const image = await readFile(files.image.filepath);
     const result = await connection.execute('INSERT INTO `images` SET image=?, mimetype=?', [image, files.image.mimetype]);
     console.debug(result);
-    return await res.json({id: result.shift().insertId})
+    return send(res, 200, {id: result.shift().insertId})
 })
 
 export default async (req, res) => await router(req, res, finalhandler(req, res))
