@@ -2,6 +2,7 @@ import Router from 'router'
 import formidable from 'formidable'
 import finalhandler from 'finalhandler'
 import {readFile} from "fs/promises"
+import handler from 'serve-handler'
 import mysql from 'mysql2/promise'
 
 const mysqlCredentials = {
@@ -11,7 +12,7 @@ const mysqlCredentials = {
     database: process.env.MYSQL_DB
 }
 
-const router = Router().get('/get', async (req, res) => {
+const router = Router().get('/', handler).get('/get', async (req, res) => {
     if (!req.query.id) return res.send('No parameter')
     const connection = await mysql.createConnection(mysqlCredentials);
     const [rows, fields] = await connection.execute('SELECT * FROM `images` WHERE id=?', [parseInt(req.query.id)]);
