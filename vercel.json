@@ -6,7 +6,12 @@
     },
     {
       "src": "index.mjs",
-      "use": "@vercel/node@canary"
+      "use": "@vercel/node@canary",
+      "config": {
+        "includeFiles": [
+          "index.html"
+        ]
+      }
     }
   ],
   "rewrites": [
