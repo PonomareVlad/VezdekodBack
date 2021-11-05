@@ -5,6 +5,7 @@
     <title>Vezdekod • Back</title>
     <meta content="dark light" name="color-scheme">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <base href="">
     <style>
         * {
             font-family: Helvetica, sans-serif;
@@ -13,6 +14,11 @@
 </head>
 <body>
 <h1>Back-end</h1>
+<fieldset>
+    <h2>0. Укажите адрес и порт сервиса</h2>
+    <input id="base" placeholder="http://localhost:80" type="url">
+</fieldset>
+<br>
 <form action="/upload" enctype="multipart/form-data" method="post">
     <fieldset>
         <h2>1. Загрузка изображения</h2>
@@ -34,4 +40,8 @@
     </fieldset>
 </form>
 </body>
+<script>
+    document.getElementById('base').addEventListener('change', ({target} = {}) =>
+        target.reportValidity() && (document.querySelector('base').href = target.value))
+</script>
 </html>
